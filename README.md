@@ -12,19 +12,8 @@ Event Tracking - Set events for today or any other day
 Assignment Deadline Alerts - Get notified when you're close to assignment submission deadlines
 Sound/Vibration - Audio alerts and vibration notifications when alarms trigger
 
-Project Structure:
-alarm-app/
-├── main.mjs                   # Main application entry point
-├── features/
-│   ├── time.mjs               # Time display functionality
-│   ├── alarms.mjs             # Alarm management (to be implemented)
-│   ├── calendar.mjs           # Calendar and event management (to be implemented)
-│   └── notifications.mjs      # Sound and vibration alerts (to be implemented)
-├── README.md                  # This file
-└── package.json               # Project metadata
-
 To run the application:
-node main.mjs
+Open the index.html
 The application will display the current time and date, updating every second.
 
 Current Features
@@ -61,7 +50,5 @@ Trigger vibrations
 Send deadline reminders
 Development Notes
 
-
 Author:
 Solomon Essien
-
