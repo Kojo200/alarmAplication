@@ -3,6 +3,15 @@ import {
   getCurrentTime,
   getCurrentDate,
 } from "./features/time.mjs";
+import { initMenuInput, getMenuOpen, drawMenu } from "./components/menu.mjs";
+import {
+  initSettings,
+  getSettingsOpen,
+  getClockFormat,
+  handleSettingsMouseMove,
+  handleSettingsClick,
+  drawSettings,
+} from "./components/settings.mjs";
 
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
@@ -17,6 +26,8 @@ const padding = 20;
 //#region INITIALIZATION
 
 function init() {
+  initMenuInput(document);
+  initSettings();
   loop();
 }
 
@@ -35,7 +46,24 @@ function loop() {
 //#region UPDATE
 
 function update() {
-  // Update logic will go here
+  // Mouse tracking for menu and settings
+  document.addEventListener("mousemove", (event) => {
+    const canvas = document.getElementById("canvas");
+    const rect = canvas.getBoundingClientRect();
+    const mouseX = event.clientX - rect.left;
+    const mouseY = event.clientY - rect.top;
+
+    handleSettingsMouseMove(mouseX, mouseY, width, height);
+  });
+
+  document.addEventListener("click", (event) => {
+    const canvas = document.getElementById("canvas");
+    const rect = canvas.getBoundingClientRect();
+    const mouseX = event.clientX - rect.left;
+    const mouseY = event.clientY - rect.top;
+
+    handleSettingsClick(mouseX, mouseY, width, height);
+  });
 }
 
 //#endregion
@@ -54,7 +82,7 @@ function draw() {
   ctx.fillText("⏰ Alarm Application", width / 2, 60);
 
   // Draw time display
-  const currentTime = getCurrentTime();
+  const currentTime = getCurrentTime(getClockFormat());
   const currentDate = getCurrentDate();
 
   ctx.fillStyle = "#667eea";
@@ -70,6 +98,10 @@ function draw() {
 
   ctx.font = '20px "Courier New"';
   ctx.fillText(currentDate, width / 2, 300);
+
+  // Draw menu and settings
+  drawMenu(ctx, width, height);
+  drawSettings(ctx, width, height);
 }
 
 //#endregion
