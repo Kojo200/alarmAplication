@@ -6,11 +6,16 @@ import {
 import { initMenuInput, getMenuOpen, drawMenu } from "./components/menu.mjs";
 import {
   initSettings,
+  openSettings,
   getSettingsOpen,
+  getClockFormatScreenOpen,
   getClockFormat,
   handleSettingsMouseMove,
+  handleClockFormatMouseMove,
   handleSettingsClick,
+  handleClockFormatClick,
   drawSettings,
+  drawClockFormatScreen,
 } from "./components/settings.mjs";
 
 const canvas = document.getElementById("canvas");
@@ -23,11 +28,22 @@ const width = 800;
 const height = 600;
 const padding = 20;
 
+// Track if listeners are initialized
+let listenersInitialized = false;
+
 //#region INITIALIZATION
 
 function init() {
   initMenuInput(document);
   initSettings();
+
+  // Listen for menu item selections
+  document.addEventListener("menuItemSelected", (event) => {
+    if (event.detail.id === "settings") {
+      openSettings();
+    }
+  });
+
   loop();
 }
 
@@ -46,24 +62,29 @@ function loop() {
 //#region UPDATE
 
 function update() {
-  // Mouse tracking for menu and settings
-  document.addEventListener("mousemove", (event) => {
-    const canvas = document.getElementById("canvas");
-    const rect = canvas.getBoundingClientRect();
-    const mouseX = event.clientX - rect.left;
-    const mouseY = event.clientY - rect.top;
+  // Only add event listeners once
+  if (!listenersInitialized) {
+    // Mouse tracking for menu and settings
+    document.addEventListener("mousemove", (event) => {
+      const rect = canvas.getBoundingClientRect();
+      const mouseX = event.clientX - rect.left;
+      const mouseY = event.clientY - rect.top;
 
-    handleSettingsMouseMove(mouseX, mouseY, width, height);
-  });
+      handleSettingsMouseMove(mouseX, mouseY, width, height);
+      handleClockFormatMouseMove(mouseX, mouseY, width, height);
+    });
 
-  document.addEventListener("click", (event) => {
-    const canvas = document.getElementById("canvas");
-    const rect = canvas.getBoundingClientRect();
-    const mouseX = event.clientX - rect.left;
-    const mouseY = event.clientY - rect.top;
+    document.addEventListener("click", (event) => {
+      const rect = canvas.getBoundingClientRect();
+      const mouseX = event.clientX - rect.left;
+      const mouseY = event.clientY - rect.top;
 
-    handleSettingsClick(mouseX, mouseY, width, height);
-  });
+      handleSettingsClick(mouseX, mouseY, width, height);
+      handleClockFormatClick(mouseX, mouseY, width, height);
+    });
+
+    listenersInitialized = true;
+  }
 }
 
 //#endregion
@@ -102,6 +123,7 @@ function draw() {
   // Draw menu and settings
   drawMenu(ctx, width, height);
   drawSettings(ctx, width, height);
+  drawClockFormatScreen(ctx, width, height);
 }
 
 //#endregion

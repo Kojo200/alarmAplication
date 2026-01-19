@@ -2,7 +2,7 @@ Alarm Application
 A modular JavaScript-based alarm application built with Node.js that displays time, manages alarms, and tracks events.
 
 Project Overview
-This alarm application is designed with a modular architecture where each feature is implemented in its own file and imported into the main application. The application is built using only fundamental JavaScript concepts: variables, conditionals, loops, lists, collections, functions, arrays, and structures.
+This alarm application is designed with a modular architecture where each feature is implemented in its own file and imported into the main application.
 
 Features
 Current Time Display - Shows the current time in HH:MM:SS format and the current date
@@ -49,6 +49,9 @@ Play alarm sounds
 Trigger vibrations
 Send deadline reminders
 Development Notes
+
+All tasks for the project is managed here:
+https://trello.com/invite/b/69663ff5930e034806347a50/ATTIf8eb83aae8d69251191249e4af744bbb5C45CC85/alarm-application
 
 Author:
 Solomon Essien
