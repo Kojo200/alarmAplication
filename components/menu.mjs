@@ -2,11 +2,7 @@
 let isMenuOpen = false;
 let selectedMenuIndex = 0;
 
-const menuItems = [
-  { label: "Settings", id: "settings" },
-  { label: "Help", id: "help" },
-  { label: "About", id: "about" },
-];
+const menuItems = [{ label: "Settings", id: "settings" }];
 
 const menuConfig = {
   x: 0,
@@ -132,7 +128,7 @@ function getSelectedMenuItem() {
 // Draw menu
 function drawMenu(ctx, canvasWidth, canvasHeight) {
   menuConfig.x = canvasWidth - menuConfig.width - 15;
-  menuConfig.y = 15;
+  menuConfig.y = 10;
 
   // Draw menu button
   ctx.fillStyle = isMenuOpen ? "#764ba2" : "#667eea";
@@ -159,7 +155,7 @@ function drawMenu(ctx, canvasWidth, canvasHeight) {
   ctx.stroke();
 
   ctx.fillStyle = "white";
-  ctx.font = 'bold 14px "Courier New"';
+  ctx.font = "bold 14px 'Courier New'";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
   ctx.fillText(
@@ -201,7 +197,7 @@ function drawMenu(ctx, canvasWidth, canvasHeight) {
 
       // Draw item text
       ctx.fillStyle = "white";
-      ctx.font = '12px "Courier New"';
+      ctx.font = "12px 'Courier New'";
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
       ctx.fillText(

@@ -2,7 +2,8 @@
 let isSettingsOpen = false;
 let isClockFormatScreenOpen = false;
 let clockFormatScreenJustOpened = false;
-let clockFormat = "24h"; // '24h' or '12h'
+let clockFormat = "24h";
+let closeTimeEditorFn = null;
 
 const settingsConfig = {
   x: 0,
@@ -488,6 +489,11 @@ function drawClockFormatScreen(ctx, canvasWidth, canvasHeight) {
   }
 }
 
+// Set the close time editor function (called from main.mjs)
+function setCloseTimeEditorFn(fn) {
+  closeTimeEditorFn = fn;
+}
+
 // Helper function to draw rounded rectangles
 function roundRect(ctx, x, y, width, height, radius) {
   ctx.beginPath();
@@ -513,6 +519,7 @@ export {
   getClockFormatScreenOpen,
   getClockFormat,
   setClockFormat,
+  setCloseTimeEditorFn,
   handleSettingsMouseMove,
   handleClockFormatMouseMove,
   handleSettingsClick,

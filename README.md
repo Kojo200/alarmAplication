@@ -18,18 +18,27 @@ The application will display the current time and date, updating every second.
 
 Current Features
 Time Display
+Alarm Creation
 The application shows:
 
 Current time in 24-hour format (HH:MM:SS)
 Current date with day name, month, and year
+Creating and setting alarms
+Changing from 12h to 24h format
+
+
 
 File Descriptions:
 main.mjs
 The entry point of the application. It imports all feature modules and coordinates the overall application flow.
 
 Functions:
-time.mjs
+Time
 Handles all time-related functionality.
+
+Alarm 
+Handles creating, setting alarms.
+
 
 Future Development:
 The following features are planned to be added:
