@@ -6,9 +6,9 @@ let isTimeEditorOpen = false;
 let selectedAlarmId = -1;
 let editingHours = 0;
 let editingMinutes = 0;
-let editingPeriod = "AM"; // "AM" or "PM" for 12-hour format
-let selectedField = "hours"; // "hours" or "minutes"
-let hoveredButton = ""; // "hourUp", "hourDown", "minUp", "minDown", "save", "cancel"
+let editingPeriod = "AM";
+let selectedField = "hours";
+let hoveredButton = "";
 
 const timeEditorConfig = {
   x: 0,
@@ -39,12 +39,6 @@ function openTimeEditor(alarmId, hours, minutes) {
   editingMinutes = minutes;
   selectedField = "hours";
   hoveredButton = "";
-  console.log(
-    "Time editor opened with:",
-    editingHours,
-    editingMinutes,
-    editingPeriod,
-  );
 }
 
 // Close time editor
@@ -189,9 +183,7 @@ function handleTimeEditorClick(mouseX, mouseY, canvasWidth, canvasHeight) {
     mouseY >= centerY + 140 &&
     mouseY <= centerY + 170
   ) {
-    console.log("Before:", editingMinutes);
     editingMinutes = (editingMinutes - 1 + 60) % 60;
-    console.log("After:", editingMinutes);
     return;
   }
   // Check save button
