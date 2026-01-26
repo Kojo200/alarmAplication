@@ -161,7 +161,7 @@ function handleTimeEditorClick(mouseX, mouseY, canvasWidth, canvasHeight) {
     mouseY <= centerY + 110
   ) {
     if (getClockFormat() === "12h") {
-      editingHours = (editingHours + 1) % 12;
+      editingHours = (editingHours % 12) + 1;
     } else {
       editingHours = (editingHours + 1) % 24;
     }
@@ -176,7 +176,10 @@ function handleTimeEditorClick(mouseX, mouseY, canvasWidth, canvasHeight) {
     mouseY <= centerY + 170
   ) {
     if (getClockFormat() === "12h") {
-      editingHours = (editingHours - 1 + 12) % 12;
+      editingHours = editingHours - 1;
+      if (editingHours < 1) {
+        editingHours = 12;
+      }
     } else {
       editingHours = (editingHours - 1 + 24) % 24;
     }

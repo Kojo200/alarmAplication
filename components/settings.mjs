@@ -277,7 +277,7 @@ function drawSettings(ctx, canvasWidth, canvasHeight) {
 
   // Draw title
   ctx.fillStyle = "white";
-  ctx.font = 'bold 24px "Courier New"';
+  ctx.font = "bold 24px 'Courier New'";
   ctx.textAlign = "left";
   ctx.fillText("Settings", centerX + settingsConfig.padding, centerY + 35);
 
@@ -288,7 +288,7 @@ function drawSettings(ctx, canvasWidth, canvasHeight) {
   ctx.lineWidth = 1;
   ctx.strokeRect(centerX + settingsConfig.width - 35, centerY + 10, 25, 25);
   ctx.fillStyle = "white";
-  ctx.font = 'bold 16px "Courier New"';
+  ctx.font = "bold 16px 'Courier New'";
   ctx.textAlign = "center";
   ctx.fillText("✕", centerX + settingsConfig.width - 22.5, centerY + 22.5);
 
@@ -325,7 +325,7 @@ function drawSettings(ctx, canvasWidth, canvasHeight) {
 
     // Draw item label
     ctx.fillStyle = "white";
-    ctx.font = '14px "Courier New"';
+    ctx.font = "14px 'Courier New'";
     ctx.textAlign = "left";
     ctx.fillText(item.label, centerX + settingsConfig.padding + 15, itemY + 18);
 
@@ -333,7 +333,7 @@ function drawSettings(ctx, canvasWidth, canvasHeight) {
     if (item.id === "clockFormat") {
       const formatText = clockFormat === "24h" ? "24-Hour" : "12-Hour";
       ctx.fillStyle = "#667eea";
-      ctx.font = 'bold 14px "Courier New"';
+      ctx.font = "bold 14px 'Courier New'";
       ctx.textAlign = "right";
       ctx.fillText(
         formatText,
@@ -382,7 +382,7 @@ function drawClockFormatScreen(ctx, canvasWidth, canvasHeight) {
 
   // Draw title
   ctx.fillStyle = "white";
-  ctx.font = 'bold 24px "Courier New"';
+  ctx.font = "bold 24px 'Courier New'";
   ctx.textAlign = "left";
   ctx.fillText(
     "Clock Format",
@@ -407,7 +407,7 @@ function drawClockFormatScreen(ctx, canvasWidth, canvasHeight) {
     25,
   );
   ctx.fillStyle = "white";
-  ctx.font = 'bold 16px "Courier New"';
+  ctx.font = "bold 16px 'Courier New'";
   ctx.textAlign = "center";
   ctx.fillText(
     "←",
@@ -451,7 +451,7 @@ function drawClockFormatScreen(ctx, canvasWidth, canvasHeight) {
 
     // Draw option label
     ctx.fillStyle = "white";
-    ctx.font = '14px "Courier New"';
+    ctx.font = "14px 'Courier New'";
     ctx.textAlign = "left";
     ctx.fillText(
       option.label,
