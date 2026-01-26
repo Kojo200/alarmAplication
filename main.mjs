@@ -1,7 +1,7 @@
 import { displayCurrentTime, getCurrentTime, getCurrentDate } from "./features/time.mjs";
 import { initMenuInput, getMenuOpen, drawMenu } from "./components/menu.mjs";
 import { initSettings, openSettings, getSettingsOpen, getClockFormatScreenOpen, getClockFormat, setCloseTimeEditorFn, handleSettingsMouseMove, handleClockFormatMouseMove, handleSettingsClick, handleClockFormatClick, drawSettings, drawClockFormatScreen } from "./components/settings.mjs";
-import { openAlarmManager, getAlarmManagerOpen, handleAlarmManagerMouseMove, handleAlarmManagerClick, drawAlarmManagerOnScreen, handleAlarmManagerMouseMoveOnScreen, handleAlarmManagerClickOnScreen } from "./components/alarmManager.mjs";
+import { openAlarmManager, getAlarmManagerOpen, drawAlarmManagerOnScreen, handleAlarmManagerMouseMoveOnScreen, handleAlarmManagerClickOnScreen } from "./components/alarmManager.mjs";
 import { getTimeEditorOpen, closeTimeEditor, handleTimeEditorMouseMove, handleTimeEditorClick, drawTimeEditor } from "./components/timeEditor.mjs";
 
 const canvas = document.getElementById("canvas");

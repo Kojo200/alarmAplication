@@ -26,10 +26,18 @@ function openTimeEditor(alarmId, hours, minutes) {
 
   // Convert to 12-hour format if needed
   if (getClockFormat() === "12h") {
-    editingPeriod = hours >= 12 ? "PM" : "AM";
-    editingHours = hours % 12;
-    if (editingHours === 0) {
+    if (hours === 0) {
       editingHours = 12;
+      editingPeriod = "AM";
+    } else if (hours < 12) {
+      editingHours = hours;
+      editingPeriod = "AM";
+    } else if (hours === 12) {
+      editingHours = 12;
+      editingPeriod = "PM";
+    } else {
+      editingHours = hours - 12;
+      editingPeriod = "PM";
     }
   } else {
     editingHours = hours;
@@ -45,7 +53,6 @@ function openTimeEditor(alarmId, hours, minutes) {
 function closeTimeEditor() {
   isTimeEditorOpen = false;
   selectedAlarmId = -1;
-  hoveredButton = "";
 }
 
 // Check if time editor is open
@@ -153,9 +160,14 @@ function handleTimeEditorClick(mouseX, mouseY, canvasWidth, canvasHeight) {
     mouseY >= centerY + 80 &&
     mouseY <= centerY + 110
   ) {
-    editingHours = (editingHours + 1) % 24;
+    if (getClockFormat() === "12h") {
+      editingHours = (editingHours + 1) % 12;
+    } else {
+      editingHours = (editingHours + 1) % 24;
+    }
     return;
   }
+
   // Check hour down button
   if (
     mouseX >= centerX + timeEditorConfig.padding + 30 &&
@@ -163,9 +175,14 @@ function handleTimeEditorClick(mouseX, mouseY, canvasWidth, canvasHeight) {
     mouseY >= centerY + 140 &&
     mouseY <= centerY + 170
   ) {
-    editingHours = (editingHours - 1 + 24) % 24;
+    if (getClockFormat() === "12h") {
+      editingHours = (editingHours - 1 + 12) % 12;
+    } else {
+      editingHours = (editingHours - 1 + 24) % 24;
+    }
     return;
   }
+
   // Check minute up button
   if (
     mouseX >= centerX + timeEditorConfig.padding + 120 &&
@@ -176,6 +193,7 @@ function handleTimeEditorClick(mouseX, mouseY, canvasWidth, canvasHeight) {
     editingMinutes = (editingMinutes + 1) % 60;
     return;
   }
+
   // Check minute down button
   if (
     mouseX >= centerX + timeEditorConfig.padding + 120 &&
@@ -186,6 +204,31 @@ function handleTimeEditorClick(mouseX, mouseY, canvasWidth, canvasHeight) {
     editingMinutes = (editingMinutes - 1 + 60) % 60;
     return;
   }
+
+  // Check AM button if 12h format
+  if (
+    getClockFormat() === "12h" &&
+    mouseX >= centerX + timeEditorConfig.padding + 30 &&
+    mouseX <= centerX + timeEditorConfig.padding + 80 &&
+    mouseY >= centerY + 195 &&
+    mouseY <= centerY + 225
+  ) {
+    editingPeriod = "AM";
+    return;
+  }
+
+  // Check PM button if 12h format
+  if (
+    getClockFormat() === "12h" &&
+    mouseX >= centerX + timeEditorConfig.padding + 120 &&
+    mouseX <= centerX + timeEditorConfig.padding + 170 &&
+    mouseY >= centerY + 195 &&
+    mouseY <= centerY + 225
+  ) {
+    editingPeriod = "PM";
+    return;
+  }
+
   // Check save button
   if (
     mouseX >= centerX + timeEditorConfig.padding &&
@@ -193,10 +236,19 @@ function handleTimeEditorClick(mouseX, mouseY, canvasWidth, canvasHeight) {
     mouseY >= centerY + timeEditorConfig.height - 50 &&
     mouseY <= centerY + timeEditorConfig.height - 20
   ) {
-    updateAlarmTime(selectedAlarmId, editingHours, editingMinutes);
+    let finalHours = editingHours;
+    if (getClockFormat() === "12h") {
+      if (editingPeriod === "PM" && editingHours !== 12) {
+        finalHours = editingHours + 12;
+      } else if (editingPeriod === "AM" && editingHours === 12) {
+        finalHours = 0;
+      }
+    }
+    updateAlarmTime(selectedAlarmId, finalHours, editingMinutes);
     closeTimeEditor();
     return;
   }
+
   // Check cancel button
   if (
     mouseX >=
@@ -449,15 +501,6 @@ function drawTimeEditor(ctx, canvasWidth, canvasHeight) {
     centerX + timeEditorConfig.width - timeEditorConfig.padding - 75,
     centerY + timeEditorConfig.height - 30,
   );
-}
-
-// Helper function to pad numbers with leading zeros
-function padZero(num) {
-  let numStr = num.toString();
-  if (numStr.length < 2) {
-    numStr = "0" + numStr;
-  }
-  return numStr;
 }
 
 // Helper function to draw rounded rectangles
