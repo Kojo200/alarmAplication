@@ -23,10 +23,8 @@ The application shows:
 
 Current time in 24-hour format (HH:MM:SS)
 Current date with day name, month, and year
-Creating and setting alarms
+Creating, deleting and setting alarms
 Changing from 12h to 24h format
-
-
 
 File Descriptions:
 main.mjs
@@ -36,18 +34,16 @@ Functions:
 Time
 Handles all time-related functionality.
 
-Alarm 
+Alarm
 Handles creating, setting alarms.
 
+Completed features:
+Time Display
+Alarm Management
 
 Future Development:
 The following features are planned to be added:
 
-Alarm Management (alarms.mjs)
-Create alarms
-Set alarm times
-Enable/disable alarms
-Delete alarms
 Calendar & Events (calendar.mjs)
 View calendar
 Add events
