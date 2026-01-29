@@ -3,6 +3,9 @@ import { initMenuInput, getMenuOpen, drawMenu } from "./components/menu.mjs";
 import { initSettings, openSettings, getSettingsOpen, getClockFormatScreenOpen, getClockFormat, setCloseTimeEditorFn, handleSettingsMouseMove, handleClockFormatMouseMove, handleSettingsClick, handleClockFormatClick, drawSettings, drawClockFormatScreen } from "./components/settings.mjs";
 import { openAlarmManager, getAlarmManagerOpen, drawAlarmManagerOnScreen, handleAlarmManagerMouseMoveOnScreen, handleAlarmManagerClickOnScreen } from "./components/alarmManager.mjs";
 import { getTimeEditorOpen, closeTimeEditor, handleTimeEditorMouseMove, handleTimeEditorClick, drawTimeEditor } from "./components/timeEditor.mjs";
+import { initCalendar, openCalendar, getCalendarOpen } from "./features/calendar.mjs";
+import { handleCalendarDisplayMouseMove, handleCalendarDisplayClick, drawCalendarDisplay } from "./components/calendarDisplay.mjs";
+import { initViewManager, getCurrentViewType, getViewCurrentMonth, getViewCurrentYear, handleViewManagerMouseMove, handleViewManagerClick, drawViewManager } from "./components/viewManager.mjs";
 
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
@@ -22,6 +25,8 @@ let listenersInitialized = false;
 function init() {
   initMenuInput(document);
   initSettings();
+  initCalendar();
+  initViewManager();
   setCloseTimeEditorFn(closeTimeEditor);
   
   // Listen for menu item selections
@@ -63,6 +68,8 @@ function update() {
       handleClockFormatMouseMove(mouseX, mouseY, width, height);
       handleAlarmManagerMouseMoveOnScreen(mouseX, mouseY, width, height, 350);
       handleTimeEditorMouseMove(mouseX, mouseY, width, height);
+      handleCalendarDisplayMouseMove(mouseX, mouseY, width, height, getViewCurrentMonth(), getViewCurrentYear());
+      handleViewManagerMouseMove(mouseX, mouseY, width, height);
     });
     
     document.addEventListener("click", (event) => {
@@ -74,6 +81,8 @@ function update() {
       handleClockFormatClick(mouseX, mouseY, width, height);
       handleAlarmManagerClickOnScreen(mouseX, mouseY, width, height, 350);
       handleTimeEditorClick(mouseX, mouseY, width, height);
+      handleCalendarDisplayClick(mouseX, mouseY, width, height, getViewCurrentMonth(), getViewCurrentYear());
+      handleViewManagerClick(mouseX, mouseY, width, height);
     });
     
     listenersInitialized = true;
@@ -89,12 +98,40 @@ function draw() {
   ctx.fillStyle = "#1a1a1a";
   ctx.fillRect(0, 0, width, height);
 
-  // Draw title
+  // Get current view
+  let currentView = getCurrentViewType();
+  let titleText = currentView === "alarm" ? "⏰ Alarms" : "📅 Calendar";
+  
+  // Draw title based on current view
   ctx.fillStyle = "white";
   ctx.font = "bold 32px 'Courier New'";
   ctx.textAlign = "center";
-  ctx.fillText("⏰ Alarm Application", width / 2, 60);
+  ctx.fillText(titleText, width / 2, 75);
 
+  // Draw view manager buttons
+  drawViewManager(ctx, width, height);
+
+  if (currentView === "alarm") {
+    // Draw alarm view
+    drawAlarmView();
+  } else if (currentView === "calendar") {
+    // Draw calendar view
+    drawCalendarView();
+  }
+
+  // Draw menu FIRST (so it's below settings/modals)
+  drawMenu(ctx, width, height);
+  
+  // Draw calendar display (but it will be behind modals)
+  drawCalendarDisplay(ctx, width, height, getViewCurrentMonth(), getViewCurrentYear());
+  
+  // Draw settings and modals LAST so they appear on top
+  drawSettings(ctx, width, height);
+  drawClockFormatScreen(ctx, width, height);
+  drawTimeEditor(ctx, width, height);
+}
+
+function drawAlarmView() {
   // Draw time display
   const currentTime = getCurrentTime(getClockFormat());
   const currentDate = getCurrentDate();
@@ -115,12 +152,11 @@ function draw() {
   
   // Draw alarms on main screen
   drawAlarmManagerOnScreen(ctx, width, height, 350);
-  
-  // Draw menu and settings LAST so they appear on top
-  drawMenu(ctx, width, height);
-  drawSettings(ctx, width, height);
-  drawClockFormatScreen(ctx, width, height);
-  drawTimeEditor(ctx, width, height);
+}
+
+function drawCalendarView() {
+  // Calendar is drawn via drawCalendarDisplay function
+  // which handles its own layout
 }
 
 //#endregion

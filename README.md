@@ -19,12 +19,14 @@ The application will display the current time and date, updating every second.
 Current Features
 Time Display
 Alarm Creation
+Calendar View (Monthly/Weekly)
 The application shows:
 
 Current time in 24-hour format (HH:MM:SS)
 Current date with day name, month, and year
 Creating, deleting and setting alarms
 Changing from 12h to 24h format
+Viewing monthly or weekly Calendar
 
 File Descriptions:
 main.mjs
@@ -40,12 +42,12 @@ Handles creating, setting alarms.
 Completed features:
 Time Display
 Alarm Management
+Calendar View
 
 Future Development:
 The following features are planned to be added:
 
 Calendar & Events (calendar.mjs)
-View calendar
 Add events
 Track assignment deadlines
 Display upcoming events
